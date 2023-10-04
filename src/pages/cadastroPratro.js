@@ -7,6 +7,11 @@ import Col from 'react-bootstrap/Col';
 import '../css/cprato.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "https://g982fff9b625c91-group2db.adb.sa-saopaulo-1.oraclecloudapps.com/ords/appuser/"
+})
 
 export default class Food extends Component {
     
@@ -32,10 +37,13 @@ export default class Food extends Component {
             })
         }
 
-        submitForm(){
-                alert(JSON.stringify(this.state));
+        submitForm(e){
+            e.preventDefault();
+            api.post("pratos/", this.state).then(res=>{
+                console.log(res)
+            })
         }
-
+        
     render(){
   return (
 <div className="center">
@@ -57,8 +65,9 @@ export default class Food extends Component {
                         <Form.Group as={Col} controlId="formGridendereco">
                             <Form.Label className="details-form">Restaurante</Form.Label>
                             <Form.Control  as="select"  className="font-forms select-forms" placeholder="Informe o endereço" value={this.state.restaurante} onChange={this.changeField.bind(this,'restaurante')} >
-                                <option>Restaurante 1</option>
-                                <option>Restaurante 2</option>
+                                <option>Selecione o Restaurante</option>
+                                <option value="18">Restaureante 1</option>
+                                <option value="20">Restaureante 2</option>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridPreco">

@@ -1,3 +1,4 @@
+
 import Menu from './menu.js';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -7,6 +8,12 @@ import Col from 'react-bootstrap/Col';
 import '../css/crestaurant.css';
 import '../css/index.css';
 import React,{Component} from 'react';
+
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "https://g982fff9b625c91-group2db.adb.sa-saopaulo-1.oraclecloudapps.com/ords/appuser/"
+})
 
 export default class Restaurant extends Component {
     
@@ -32,8 +39,11 @@ export default class Restaurant extends Component {
             })
         }
 
-        submitForm(){
-                alert(JSON.stringify(this.state));
+        submitForm(e){
+            e.preventDefault();
+            api.post("restaurantes/", this.state).then(res=>{
+                console.log(res)
+            })
         }
 
     render(){
@@ -66,7 +76,7 @@ export default class Restaurant extends Component {
                         </Form.Group>
                         </Form.Row>
                         <Form.Group controlId="formGridendereco">
-                            <Form.Label className="details-form">Enreceço</Form.Label>
+                            <Form.Label className="details-form">Endereço</Form.Label>
                             <Form.Control  className="font-forms" placeholder="Informe o endereço" value={this.state.endereco} onChange={this.changeField.bind(this,'endereco')} />
                         </Form.Group>
 
